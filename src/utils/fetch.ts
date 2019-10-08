@@ -83,6 +83,48 @@ export async function request(
   }
 }
 
+export async function get(
+  url: string,
+  params: any,
+  credential: Credentials,
+  useJwt: boolean = false,
+  useBasicAuth: boolean = false
+) {
+  params = params || {};
+
+  if (!useJwt && !useBasicAuth) {
+    params['api_key'] = credential.apiKey;
+    params['api_secret'] = credential.apiSecret;
+  }
+
+  url = `${url}?${querystring.stringify(params)}`;
+
+  const headers = new Headers({
+    'Content-Type': 'application/json'
+  });
+
+  if (useJwt) {
+    headers.set('Authorization', `Bearer ${credential.generateJwt()}`);
+  }
+  if (useBasicAuth) {
+    headers.set(
+      'Authorization',
+      `Basic ${Buffer.from(
+        credential.apiKey + ':' + credential.apiSecret
+      ).toString('base64')}`
+    );
+  }
+
+  return request(
+    url,
+    {
+      method: 'GET',
+      headers: headers
+    },
+    credential
+  );
+}
+
 export async function handleResponse(
   response: Response,
   request: RequestInit,

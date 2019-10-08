@@ -6,4 +6,5 @@ export declare const defaultHeaders: {
     Accept: string;
 };
 export declare function request(url: RequestInfo, init: RequestInit, credential: Credentials, autoParseJson?: boolean, customResponseParser?: Function): Promise<any>;
+export declare function get(url: string, params: any, credential: Credentials, useJwt?: boolean, useBasicAuth?: boolean): Promise<any>;
 export declare function handleResponse(response: Response, request: RequestInit, autoParseJson?: boolean, customResponseParser?: Function): Promise<any>;
