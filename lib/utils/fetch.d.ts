@@ -1,6 +1,9 @@
-import { RequestInit, RequestInfo, Headers, Response } from 'node-fetch';
+import { RequestInit, RequestInfo, Response } from 'node-fetch';
 import Credentials from '../credential';
-export { Headers, Response };
+export declare interface IHeaders {
+    [key: string]: string;
+}
+export { Response };
 export declare const defaultHeaders: {
     'Content-Type': string;
     Accept: string;

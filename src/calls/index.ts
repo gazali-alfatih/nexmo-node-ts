@@ -53,11 +53,11 @@ export class NexmoCalls {
       {
         method: 'POST',
         body: body,
-        headers: new HTTPClient.Headers({
+        headers: {
           'Content-Type': 'application/json',
           // 'Content-Length': Buffer.byteLength(params).toString(),
           Authorization: `Bearer ${this.credential.generateJwt()}`
-        })
+        }
       },
       this.credential
     );
@@ -104,11 +104,11 @@ export class NexmoCalls {
       {
         method: 'PUT',
         body: body,
-        headers: new HTTPClient.Headers({
+        headers: {
           'Content-Type': 'application/json',
           // 'Content-Length': Buffer.byteLength(params).toString(),
           Authorization: `Bearer ${this.credential.generateJwt()}`
-        })
+        }
       },
       this.credential
     );

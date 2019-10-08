@@ -33,11 +33,11 @@ export class NexmoStream {
       {
         method: 'PUT',
         body: body,
-        headers: new HTTPClient.Headers({
+        headers: {
           'Content-Type': 'application/json',
           // 'Content-Length': Buffer.byteLength(params).toString(),
           Authorization: `Bearer ${this.credential.generateJwt()}`
-        })
+        }
       },
       this.credential
     );
@@ -52,10 +52,10 @@ export class NexmoStream {
       url,
       {
         method: 'DELETE',
-        headers: new HTTPClient.Headers({
+        headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.credential.generateJwt()}`
-        })
+        }
       },
       this.credential
     );

@@ -2,8 +2,12 @@ import fetch, { RequestInit, RequestInfo, Headers, Response } from 'node-fetch';
 import * as querystring from 'querystring';
 import Credentials from '../credential';
 
+export declare interface IHeaders {
+  [key: string]: string;
+}
+
 // export fetch headers and response
-export { Headers, Response };
+export { Response };
 
 export const defaultHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
@@ -22,15 +26,15 @@ export async function request(
       // default init params
       {
         method: 'GET',
-        headers: new Headers(defaultHeaders)
+        headers: defaultHeaders
       },
       // override init params
-      init,
-      // ensure default headers is exist but not replaced
-      {
-        headers: new Headers(Object.assign({}, defaultHeaders, init.headers))
-      }
+      init
     );
+    // ensure default headers is exist but not replaced
+    init.headers = Object.assign({}, defaultHeaders, init.headers);
+    // convert to Headers
+    init.headers = new Headers(init.headers);
 
     if (credential.signatureSecret && credential.signatureMethod) {
       const splitPath = String(url).split(/\?(.+)/);
@@ -99,20 +103,17 @@ export async function get(
 
   url = `${url}?${querystring.stringify(params)}`;
 
-  const headers = new Headers({
+  const headers: IHeaders = {
     'Content-Type': 'application/json'
-  });
+  };
 
   if (useJwt) {
-    headers.set('Authorization', `Bearer ${credential.generateJwt()}`);
+    headers['Authorization'] = `Bearer ${credential.generateJwt()}`;
   }
   if (useBasicAuth) {
-    headers.set(
-      'Authorization',
-      `Basic ${Buffer.from(
-        credential.apiKey + ':' + credential.apiSecret
-      ).toString('base64')}`
-    );
+    headers['Authorization'] = `Basic ${Buffer.from(
+      credential.apiKey + ':' + credential.apiSecret
+    ).toString('base64')}`;
   }
 
   return request(

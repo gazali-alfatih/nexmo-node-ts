@@ -28,10 +28,10 @@ export class NexmoFiles {
       url,
       {
         method: 'GET',
-        headers: new HTTPClient.Headers({
+        headers: {
           'Content-Type': 'application/octet-stream',
           Authorization: `Bearer ${this.credential.generateJwt()}`
-        })
+        }
       },
       this.credential
     );
