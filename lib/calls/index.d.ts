@@ -44,7 +44,7 @@ export declare interface INexmoCallsOptions {
 export declare interface INexmoCallsCreateToPSTN {
     type: 'phone' | 'sip' | 'websocket' | 'vbc';
     number: string;
-    dtmfAnswer: string;
+    dtmfAnswer?: string;
 }
 export declare interface INexmoCallsCreateToSIP {
     type: 'phone' | 'sip' | 'websocket' | 'vbc';
