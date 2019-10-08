@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Nexmo Client for NodeJS (TypeScript Version)",
   "main": "lib/nexmo.js",
+  "types": "lib/nexmo.d.ts",
   "homepage": "https://github.com/climba03003/nexmo-node-ts",
   "repository": {
     "type": "git",
