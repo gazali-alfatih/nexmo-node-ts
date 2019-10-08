@@ -63,7 +63,7 @@ export declare interface INexmoCallsCreateToVBC {
     extension: string;
 }
 export declare interface INexmoCallsCreateParams {
-    to: INexmoCallsCreateToPSTN | INexmoCallsCreateToSIP | INexmoCallsCreateToWebsocket | INexmoCallsCreateToVBC;
+    to: Array<INexmoCallsCreateToPSTN | INexmoCallsCreateToSIP | INexmoCallsCreateToWebsocket | INexmoCallsCreateToVBC>;
     from: INexmoCallsCreateToPSTN;
     ncco?: Array<string>;
     answer_url?: Array<string>;

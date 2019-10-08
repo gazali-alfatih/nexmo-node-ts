@@ -186,11 +186,12 @@ export declare interface INexmoCallsCreateToVBC {
 }
 
 export declare interface INexmoCallsCreateParams {
-  to:
+  to: Array<
     | INexmoCallsCreateToPSTN
     | INexmoCallsCreateToSIP
     | INexmoCallsCreateToWebsocket
-    | INexmoCallsCreateToVBC;
+    | INexmoCallsCreateToVBC
+  >;
   from: INexmoCallsCreateToPSTN;
   ncco?: Array<string>;
   answer_url?: Array<string>;
