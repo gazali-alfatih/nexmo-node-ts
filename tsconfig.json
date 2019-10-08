@@ -1,0 +1,23 @@
+{
+  "version": "2.0.2",
+  "compilerOptions": {
+    "outDir": "./lib",
+    "lib": ["dom", "es5", "es6"],
+    // ES5(2009) ES6(2015) ES7(2016)
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+
+    "declaration": true,
+    // "declarationMap": true,
+
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
+}

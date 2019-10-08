@@ -1,0 +1,32 @@
+{
+  "name": "nexmo-node-ts",
+  "version": "0.0.1",
+  "description": "Nexmo Client for NodeJS (TypeScript Version)",
+  "main": "lib/nexmo.js",
+  "homepage": "https://github.com/climba03003/nexmo-node-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/climba03003/nexmo-node-ts.git"
+  },
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "author": {
+    "name": "KaKa",
+    "email": "climba03003@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^2.6.0",
+    "querystring": "^0.2.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.3.4",
+    "@types/node": "^12.7.11",
+    "@types/node-fetch": "^2.5.2",
+    "@types/uuid": "^3.4.5",
+    "typescript": "^3.6.3"
+  }
+}
