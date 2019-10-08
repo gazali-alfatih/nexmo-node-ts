@@ -14,6 +14,14 @@ export declare class Credentials {
     generateSignature(params: any, signatureSecret?: string, signatureMethod?: HashMethod): string;
     private _setJwtGenerator;
     private _setHashGenerator;
-    static parse(obj: any): Credentials;
+    static parse(obj: INexmoCredential): Credentials;
 }
 export default Credentials;
+export declare interface INexmoCredential {
+    apiKey: string;
+    apiSecret: string;
+    applicationId?: string;
+    privateKey?: any;
+    signatureSecret?: string;
+    signatureMethod?: HashMethod;
+}

@@ -79,7 +79,7 @@ export class Credentials {
     this._hashGenerator = generator;
   }
 
-  static parse(obj: any) {
+  static parse(obj: INexmoCredential) {
     if (obj instanceof Credentials) {
       return obj;
     } else {
@@ -96,3 +96,12 @@ export class Credentials {
 }
 
 export default Credentials;
+
+export declare interface INexmoCredential {
+  apiKey: string;
+  apiSecret: string;
+  applicationId?: string;
+  privateKey?: any;
+  signatureSecret?: string;
+  signatureMethod?: HashMethod;
+}

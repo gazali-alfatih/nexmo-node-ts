@@ -1,14 +1,14 @@
-import Credentials from './credential';
+import Credentials, { INexmoCredential } from './credential';
 import NexmoCalls from './calls';
 
 export class Nexmo {
   credential: Credentials;
   calls: NexmoCalls;
 
-  constructor(credential: Credentials) {
+  constructor(credential: Credentials | INexmoCredential) {
     this.credential = Credentials.parse(credential);
 
-    this.calls = new NexmoCalls(credential);
+    this.calls = new NexmoCalls(this.credential);
   }
 }
 
