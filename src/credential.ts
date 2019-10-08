@@ -86,8 +86,8 @@ export class Credentials {
       return new Credentials(
         obj.apiKey,
         obj.apiSecret,
-        obj.privateKey,
         obj.applicationId,
+        obj.privateKey,
         obj.signatureSecret,
         obj.signatureMethod
       );
