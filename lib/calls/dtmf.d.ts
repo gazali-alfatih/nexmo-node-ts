@@ -6,7 +6,7 @@ export declare class NexmoDtmf {
     static readonly ENDPOINT: EndPoint;
     static readonly RETRYPATHS: Array<NexmoHost>;
     constructor(credential: Credentials, options: INexmoDtmfOptions);
-    send(callId: string, params: INexmoDtmfParams, retry?: number): Promise<INexmoDtmfResponse>;
+    send(callsId: string, params: INexmoDtmfParams, retry?: number): Promise<INexmoDtmfResponse>;
 }
 export default NexmoDtmf;
 export declare interface INexmoDtmfOptions {

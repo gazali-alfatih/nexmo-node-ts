@@ -1,13 +1,14 @@
 import EndPoint, { NexmoHost } from '../endpoint';
 import Credentials from '../credential';
+export declare const NexmoStreamEndPoint: EndPoint;
 export declare class NexmoStream {
     credential: Credentials;
     options: INexmoStreamOptions;
     static readonly ENDPOINT: EndPoint;
     static readonly RETRYPATHS: Array<NexmoHost>;
     constructor(credential: Credentials, options: INexmoStreamOptions);
-    start(callId: string, params: INexmoStreamStartParams): Promise<INexmoStreamStartResponse>;
-    stop(callId: string): Promise<INexmoStreamStopResponse>;
+    start(callsId: string, params: INexmoStreamStartParams, retry?: number): Promise<INexmoStreamStartResponse>;
+    stop(callsId: string, retry?: number): Promise<INexmoStreamStopResponse>;
 }
 export default NexmoStream;
 export declare interface INexmoStreamOptions {

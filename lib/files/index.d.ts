@@ -1,5 +1,6 @@
 import EndPoint from '../endpoint';
 import Credentials from '../credential';
+export declare const NexmoFilesEndPoint: EndPoint;
 export declare class NexmoFiles {
     credential: Credentials;
     options: INexmoFilesOptions;

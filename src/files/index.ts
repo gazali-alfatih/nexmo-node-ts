@@ -3,12 +3,14 @@ import EndPoint, { NexmoHost } from '../endpoint';
 import Credentials from '../credential';
 import * as HTTPClient from '../utils/fetch';
 
+export const NexmoFilesEndPoint = new EndPoint('api.nexmo.com', '/v1/files');
+
 export class NexmoFiles {
   credential: Credentials;
   options: INexmoFilesOptions;
 
   static get ENDPOINT(): EndPoint {
-    return new EndPoint('api.nexmo.com', '/v1/files');
+    return NexmoFilesEndPoint;
   }
 
   constructor(credential: Credentials, options: INexmoFilesOptions = {}) {

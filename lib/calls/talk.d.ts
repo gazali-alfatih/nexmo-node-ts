@@ -1,13 +1,14 @@
 import EndPoint, { NexmoHost } from '../endpoint';
 import Credentials from '../credential';
+export declare const NexmoTalkEndPoint: EndPoint;
 export declare class NexmoTalk {
     credential: Credentials;
     options: INexmoTalkOptions;
     static readonly ENDPOINT: EndPoint;
     static readonly RETRYPATHS: Array<NexmoHost>;
     constructor(credential: Credentials, options: INexmoTalkOptions);
-    start(callId: string, params: INexmoTalkStartParams): Promise<INexmoTalkStartResponse>;
-    stop(callId: string): Promise<INexmoTalkStopResponse>;
+    start(callsId: string, params: INexmoTalkStartParams, retry?: number): Promise<INexmoTalkStartResponse>;
+    stop(callsId: string, retry?: number): Promise<INexmoTalkStopResponse>;
 }
 export default NexmoTalk;
 export declare interface INexmoTalkOptions {

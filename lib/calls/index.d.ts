@@ -3,6 +3,7 @@ import Credentials from '../credential';
 import NexmoDtmf from './dtmf';
 import NexmoStream from './stream';
 import NexmoTalk from './talk';
+export declare const NexmoCallsEndPoint: EndPoint;
 export declare class NexmoCalls {
     credential: Credentials;
     options: INexmoCallsOptions;
@@ -13,8 +14,8 @@ export declare class NexmoCalls {
     static readonly RETRYPATHS: Array<NexmoHost>;
     constructor(credential: Credentials, options?: INexmoCallsOptions);
     create(params: INexmoCallsCreateParams): Promise<INexmoCallsCreateResponse>;
-    get(query: INexmoCallsGetQuery | string): Promise<INexmoCallsGetResponse | INexmoCallsObject>;
-    update(callsId: string, params: INexmoCallsUpdateParams): Promise<null>;
+    get(query: INexmoCallsGetQuery | string, retry?: number): Promise<INexmoCallsGetResponse | INexmoCallsObject>;
+    update(callsId: string, params: INexmoCallsUpdateParams, retry?: number): Promise<null>;
 }
 export default NexmoCalls;
 export declare interface INexmoCallsObject {

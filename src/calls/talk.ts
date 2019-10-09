@@ -2,12 +2,17 @@ import EndPoint, { NexmoHost } from '../endpoint';
 import Credentials from '../credential';
 import * as HTTPClient from '../utils/fetch';
 
+export const NexmoTalkEndPoint = new EndPoint(
+  'api.nexmo.com',
+  '/v1/calls/{{uuid}}/talk'
+);
+
 export class NexmoTalk {
   credential: Credentials;
   options: INexmoTalkOptions;
 
   static get ENDPOINT(): EndPoint {
-    return new EndPoint('api.nexmo.com', '/v1/calls/{{uuid}}/talk');
+    return NexmoTalkEndPoint;
   }
 
   static get RETRYPATHS(): Array<NexmoHost> {
@@ -20,47 +25,107 @@ export class NexmoTalk {
   }
 
   async start(
-    callId: string,
-    params: INexmoTalkStartParams
+    callsId: string,
+    params: INexmoTalkStartParams,
+    retry: number = 0
   ): Promise<INexmoTalkStartResponse> {
-    const body = JSON.stringify(
-      Object.assign({ voice_name: 'Kimberly', loop: 1, level: 0 }, params)
-    );
-    const url = NexmoTalk.ENDPOINT.deserialize([
-      { key: '{{uuid}}', value: callId }
-    ]);
+    try {
+      // update path according to retry
+      NexmoTalk.ENDPOINT.host =
+        NexmoTalk.RETRYPATHS[retry % NexmoTalk.RETRYPATHS.length];
 
-    return await HTTPClient.request(
-      url,
-      {
-        method: 'PUT',
-        body: body,
-        headers: {
-          'Content-Type': 'application/json',
-          // 'Content-Length': Buffer.byteLength(params).toString(),
-          Authorization: `Bearer ${this.credential.generateJwt()}`
-        }
-      },
-      this.credential
-    );
+      const body = JSON.stringify(
+        Object.assign({ voice_name: 'Kimberly', loop: 1, level: 0 }, params)
+      );
+      const url = NexmoTalk.ENDPOINT.deserialize([
+        { key: '{{uuid}}', value: callsId }
+      ]);
+
+      const res = await HTTPClient.request(
+        url,
+        {
+          method: 'PUT',
+          body: body,
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Length': Buffer.byteLength(params).toString(),
+            Authorization: `Bearer ${this.credential.generateJwt()}`
+          }
+        },
+        this.credential
+      );
+      // Handle 404 Not Found
+      // https://help.nexmo.com/hc/en-us/articles/115015969628-Why-do-I-get-a-404-when-trying-to-change-an-active-conversation-
+      if (
+        Object.prototype.hasOwnProperty.call(res, 'type') &&
+        res.type === 'NOT_FOUND'
+      ) {
+        throw res;
+      }
+
+      return res;
+    } catch (err) {
+      console.warn(err);
+      // throw error when try limit is exceed
+      if (retry + 1 >= this.options.limit) {
+        throw new Error(err.message || err);
+      }
+      // retry if enabled
+      if (this.options.retry) {
+        return await this.start(callsId, params, retry + 1);
+      }
+      // throw err when all condition is not match
+      throw err;
+    }
   }
 
-  async stop(callId: string): Promise<INexmoTalkStopResponse> {
-    const url = NexmoTalk.ENDPOINT.deserialize([
-      { key: '{{uuid}}', value: callId }
-    ]);
+  async stop(
+    callsId: string,
+    retry: number = 0
+  ): Promise<INexmoTalkStopResponse> {
+    try {
+      // update path according to retry
+      NexmoTalk.ENDPOINT.host =
+        NexmoTalk.RETRYPATHS[retry % NexmoTalk.RETRYPATHS.length];
 
-    return await HTTPClient.request(
-      url,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.credential.generateJwt()}`
-        }
-      },
-      this.credential
-    );
+      const url = NexmoTalk.ENDPOINT.deserialize([
+        { key: '{{uuid}}', value: callsId }
+      ]);
+
+      const res = await HTTPClient.request(
+        url,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.credential.generateJwt()}`
+          }
+        },
+        this.credential
+      );
+      // Handle 404 Not Found
+      // https://help.nexmo.com/hc/en-us/articles/115015969628-Why-do-I-get-a-404-when-trying-to-change-an-active-conversation-
+      if (
+        Object.prototype.hasOwnProperty.call(res, 'type') &&
+        res.type === 'NOT_FOUND'
+      ) {
+        throw res;
+      }
+
+      return res;
+    } catch (err) {
+      console.warn(err);
+      // throw error when try limit is exceed
+      if (retry + 1 >= this.options.limit) {
+        throw new Error(err.message || err);
+      }
+      // retry if enabled
+      if (this.options.retry) {
+        return await this.stop(callsId, retry + 1);
+      }
+      // throw err when all condition is not match
+      throw err;
+    }
   }
 }
 
