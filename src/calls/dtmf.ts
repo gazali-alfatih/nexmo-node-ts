@@ -38,7 +38,7 @@ export class NexmoDtmf {
         );
       }
 
-      return await HTTPClient.request(
+      const res = await HTTPClient.request(
         url,
         {
           method: 'PUT',
@@ -51,6 +51,14 @@ export class NexmoDtmf {
         },
         this.credential
       );
+
+      // Handle 404 Not Found
+      // https://help.nexmo.com/hc/en-us/articles/115015969628-Why-do-I-get-a-404-when-trying-to-change-an-active-conversation-
+      if(Object.prototype.hasOwnProperty.call(res, 'type') && res.type === 'NOT_FOUND') {
+        throw res
+      }
+
+      return res
     } catch (err) {
       console.warn(err);
       // throw error when try limit is exceed
