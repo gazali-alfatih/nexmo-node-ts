@@ -65,8 +65,10 @@ export async function request(
     }
 
     console.info(
-      'Request: %j \nBody: %j',
-      Object.assign({ url }, init),
+      'Request: %s \nMethod: %s \nHeaders: %o \nBody: %j',
+      url,
+      init.method,
+      init.headers.raw(),
       init.body
     );
 
