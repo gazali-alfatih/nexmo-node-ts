@@ -8,6 +8,16 @@ Most of the functions in this repository is similar to the offical directory. Th
 - node-fetch for http-client instead of http / https / request
 - auto retry for [404 errors](https://help.nexmo.com/hc/en-us/articles/115015969628-Why-do-I-get-a-404-when-trying-to-change-an-active-conversation-) in calls/conversation
 
+## Installation
+
+```bash
+# NPM
+npm install https://github.com/climba03003/nexmo-node-ts.git
+
+# Yarn
+yarn add https://github.com/climba03003/nexmo-node-ts.git
+```
+
 ## Usage
 
 ```typescript
