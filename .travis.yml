@@ -5,6 +5,7 @@ node_js:
   - "10"
 install:
   - npm i
+  - npm ci
 script:
   - npm run test
 cache:
